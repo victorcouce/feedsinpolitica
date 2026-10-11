@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidad · NoPoliticsPlease</title>
+<meta name="description" content="Política de privacidad de NoPoliticsPlease: todo se analiza en tu navegador, sin servidor, sin cuentas y sin analítica.">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f2f0;--card:#e4e4e2;--ink:#0b0b0b;--muted:#5c5c58;--y:#fcfe6a;--hero:#0b0b0b;--hero-fg:#f2f2f0;--hero-muted:#b4b4ae;--line:rgba(11,11,11,.12)}
+@media (prefers-color-scheme:dark){:root{--bg:#0b0b0b;--card:#1e1e1c;--ink:#f2f2f0;--muted:#a6a6a0;--hero:#fcfe6a;--hero-fg:#0b0b0b;--hero-muted:rgba(11,11,11,.66);--line:rgba(242,242,240,.14)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Geist,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+.brand{display:flex;align-items:center;gap:12px;padding:8px 4px 24px;text-decoration:none;color:inherit}
+.brand img{width:44px;height:44px}
+.brand b{font-size:20px;font-weight:800;letter-spacing:-.03em}
+.brand b span{font-weight:400}
+.hero{background:var(--hero);color:var(--hero-fg);border-radius:32px;padding:36px 32px}
+.hero h1{margin:0 0 12px;font-size:clamp(32px,7vw,48px);line-height:1.05;font-weight:800;letter-spacing:-.04em}
+.hero p{margin:0;color:var(--hero-muted);font-size:17px}
+.hero p strong{color:var(--hero-fg)}
+.pill{display:inline-block;margin-top:20px;background:var(--y);color:#0b0b0b;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 28px}
+.fact{background:var(--card);border-radius:24px;padding:16px 18px}
+.fact b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em}
+.fact span{font-size:13px;color:var(--muted)}
+section{background:var(--card);border-radius:28px;padding:24px 26px;margin-top:10px}
+h2{margin:0 0 10px;font-size:20px;line-height:1.2;font-weight:800;letter-spacing:-.03em}
+h2 i{font-style:normal;display:inline-block;min-width:28px;height:28px;line-height:28px;text-align:center;margin-right:8px;border-radius:14px;background:var(--y);color:#0b0b0b;font-size:13px;font-weight:800;letter-spacing:0}
+p{margin:0 0 10px}
+ul{margin:0 0 10px;padding-left:20px}
+li{margin:4px 0}
+.no li{list-style:none;margin-left:-20px}
+.no li::before{content:"✕";display:inline-block;width:20px;font-weight:800}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+tr:last-child td{border-bottom:0}
+code{background:var(--bg);border-radius:6px;padding:1px 6px;font-size:.9em}
+a{color:inherit;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--y)}
+@media (prefers-color-scheme:light){a{text-decoration-color:var(--ink)}}
+footer{margin-top:28px;text-align:center;font-size:13px;color:var(--muted)}
+@media (max-width:520px){.hero{padding:28px 22px}section{padding:20px 20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="https://github.com/victorcouce/nopoliticsplease"><img src="icon.png" alt=""><b>NoPolitics<span>Please</span></b></a>
+
+  <header class="hero">
+    <h1>Política de privacidad</h1>
+    <p>NoPoliticsPlease oculta, de forma voluntaria y reversible, publicaciones de contenido político mientras navegas. <strong>Todo el análisis se hace dentro de tu navegador.</strong> La extensión no envía a ningún servidor el texto de las publicaciones ni ningún otro dato, no tiene cuentas de usuario y no incluye analítica ni publicidad.</p>
+    <span class="pill">Última actualización: 11 de octubre de 2026</span>
+  </header>
+
+  <div class="facts">
+    <div class="fact"><b>100% local</b><span>Sin servidor</span></div>
+    <div class="fact"><b>0 cuentas</b><span>Sin registro</span></div>
+    <div class="fact"><b>0 analítica</b><span>Ni publicidad</span></div>
+    <div class="fact"><b>Reversible</b><span>No borra nada</span></div>
+  </div>
+
+  <section>
+    <h2><i>1</i>Qué contenido analiza</h2>
+    <p>Cuando activas el filtro y visitas un sitio compatible, la extensión lee el <strong>texto visible de las publicaciones</strong> de la página para decidir si tratan de política o elecciones. Según el sitio, esto incluye:</p>
+    <ul>
+      <li>el texto de la publicación y, si lo hay, el de la publicación citada;</li>
+      <li>el título y el canal de un vídeo, y el extracto de su descripción;</li>
+      <li>el título de las tarjetas de enlace y el texto alternativo de las imágenes escrito por el autor;</li>
+      <li>el título y el resumen de una noticia.</li>
+    </ul>
+    <p>Este análisis ocurre únicamente en tu navegador, en el momento de mostrarse la página. El texto se compara con una lista de términos incluida en la propia extensión. <strong>No se analizan imágenes ni vídeos, no se identifica a personas y no se infiere tu opinión política ni la de nadie.</strong></p>
+    <p>La extensión no accede a mensajes privados, formularios, campos de redacción de publicaciones, contraseñas ni cookies.</p>
+  </section>
+
+  <section>
+    <h2><i>2</i>Sitios en los que funciona</h2>
+    <p>Para leer el texto de las publicaciones, la extensión necesita permiso para acceder a estos sitios, y <strong>solo a estos</strong>:</p>
+    <table>
+      <thead><tr><th>Red</th><th>Direcciones</th></tr></thead>
+      <tbody>
+        <tr><td>X</td><td>x.com, twitter.com</td></tr>
+        <tr><td>YouTube</td><td>www.youtube.com, m.youtube.com</td></tr>
+        <tr><td>Reddit</td><td>www.reddit.com, old.reddit.com</td></tr>
+        <tr><td>Bluesky</td><td>bsky.app</td></tr>
+        <tr><td>Menéame</td><td>www.meneame.net, meneame.net</td></tr>
+        <tr><td>Threads</td><td>www.threads.com, www.threads.net</td></tr>
+        <tr><td>Mastodon</td><td>mastodon.social, mastodon.online, mas.to</td></tr>
+        <tr><td>LinkedIn</td><td>www.linkedin.com</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px">En cualquier otro sitio web la extensión no se ejecuta ni puede leer nada.</p>
+  </section>
+
+  <section>
+    <h2><i>3</i>Qué información se guarda</h2>
+    <p>Se guardan <strong>en tu navegador</strong> (<code>chrome.storage.local</code>) tus preferencias y un contador:</p>
+    <ul>
+      <li>si el filtro está activado o desactivado;</li>
+      <li>el nivel de filtrado elegido (Suave o Amplio);</li>
+      <li>la duración elegida y la hora de finalización de la sesión temporal;</li>
+      <li>qué redes tienen el filtro habilitado;</li>
+      <li>el número total de publicaciones ocultadas, un simple número que puedes reiniciar desde el popup. No guarda qué publicaciones ni de qué red eran.</li>
+    </ul>
+    <p>Estos datos no salen de tu equipo. Se eliminan al desinstalar la extensión.</p>
+    <p>Mientras navegas, la extensión mantiene en memoria, y solo mientras la pestaña está abierta, el número de publicaciones ocultas y una huella numérica abreviada de cada texto, que sirve para no contar dos veces la misma publicación. <strong>No se guarda el contenido de las publicaciones</strong> y esa información desaparece al cerrar o recargar la pestaña.</p>
+  </section>
+
+  <section>
+    <h2><i>4</i>Qué información no se recopila</h2>
+    <p>NoPoliticsPlease <strong>no</strong> recopila, almacena ni transmite:</p>
+    <ul class="no">
+      <li>el contenido de las publicaciones ni su texto;</li>
+      <li>tu historial de navegación ni las direcciones que visitas;</li>
+      <li>los nombres de las cuentas que ves o sigues;</li>
+      <li>datos personales, credenciales, cookies o mensajes privados;</li>
+      <li>perfiles o preferencias políticas, reales o inferidas;</li>
+      <li>datos de uso, analítica o identificadores publicitarios.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><i>5</i>Conexiones externas y terceros</h2>
+    <p>La extensión <strong>no realiza ninguna conexión de red propia</strong>. No tiene servidor, no usa servicios de inteligencia artificial en línea y no comparte datos con terceros. Las actualizaciones de la extensión y de su lista de términos se distribuyen únicamente mediante nuevas versiones publicadas en Chrome Web Store.</p>
+    <p>No vendemos ni cedemos datos, ni los usamos para fines ajenos al funcionamiento de la extensión, ni para determinar la solvencia o conceder préstamos.</p>
+  </section>
+
+  <section>
+    <h2><i>6</i>Qué permisos solicita</h2>
+    <ul>
+      <li><code>storage</code>: guardar tus preferencias en tu navegador.</li>
+      <li><code>alarms</code>: desactivar el filtro automáticamente cuando termina una sesión temporal.</li>
+      <li><strong>Acceso a los sitios de la tabla anterior</strong>: leer el texto visible de las publicaciones y mostrar u ocultar su contenido.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><i>7</i>Cómo funciona el filtrado</h2>
+    <p>La extensión <strong>no elimina nada de las plataformas</strong>. Oculta una publicación solo visualmente, en tu pantalla, y la sustituye por una tarjeta con un botón para mostrarla. Al desactivar el filtro, todo vuelve a su estado habitual sin recargar la página. El sistema es automático y puede equivocarse: puede ocultar contenido que no es político o dejar pasar contenido que sí lo es.</p>
+  </section>
+
+  <section>
+    <h2><i>8</i>Control y eliminación</h2>
+    <ul>
+      <li>Puedes <strong>desactivar el filtro</strong> en cualquier momento desde el icono de la extensión.</li>
+      <li>Puedes <strong>desinstalar la extensión</strong> desde <code>chrome://extensions</code>; así se eliminan todos los datos que guarda.</li>
+      <li>Puedes <strong>retirar el acceso a un sitio concreto</strong> desde la configuración de la extensión en Chrome.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><i>9</i>Menores</h2>
+    <p>La extensión no está dirigida específicamente a menores y no recopila datos personales de ningún usuario.</p>
+  </section>
+
+  <section>
+    <h2><i>10</i>Cambios en esta política</h2>
+    <p>Si una versión futura cambia la forma de tratar la información (por ejemplo, al añadir nuevas redes o funciones), actualizaremos esta política antes de publicarla y modificaremos la fecha de arriba.</p>
+  </section>
+
+  <section>
+    <h2><i>11</i>Contacto</h2>
+    <p>Para cualquier pregunta sobre esta política o sobre la extensión: <a href="mailto:victor.couce@gmail.com">victor.couce@gmail.com</a></p>
+  </section>
+
+  <footer>NoPoliticsPlease · Menos ruido. Más calma.</footer>
+</div>
+</body>
+</html>
