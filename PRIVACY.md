@@ -93,4 +93,4 @@ Si una versión futura cambia la forma de tratar la información (por ejemplo, a
 
 ## 11. Contacto
 
-Para cualquier pregunta sobre esta política o sobre la extensión: **[CORREO DE CONTACTO]**
+Para cualquier pregunta sobre esta política o sobre la extensión: **victor.couce@gmail.com**
