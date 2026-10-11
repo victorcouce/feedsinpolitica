@@ -1,0 +1,29 @@
+{
+  "name": "no-politics-please",
+  "description": "Oculta publicaciones políticas en redes sociales, de forma local y reversible.",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "zip": "wxt zip",
+    "compile": "tsc --noEmit",
+    "test": "vitest run",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.300",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@wxt-dev/module-react": "^1.2.2",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.0",
+    "wxt": "^0.21.4"
+  }
+}
