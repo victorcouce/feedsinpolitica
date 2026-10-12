@@ -2,7 +2,7 @@
   "name": "no-politics-please",
   "description": "Oculta publicaciones políticas en redes sociales, de forma local y reversible.",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "wxt",
