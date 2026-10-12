@@ -29,23 +29,25 @@ const LABELS: Record<Category, string> = {
   debates: 'debates públicos',
 };
 
+const ICON = `<svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 2l5.2 9.6L38.8 7l-2.6 10.6L47 20l-8.6 7.2L44 37l-10.6-1.4L30 46l-6-8.6L18 46l-3.4-10.4L4 37l5.6-9.8L1 20l10.8-2.4L9.2 7l9.6 4.6z"/><path fill="#f6ff8a" d="M2 20.5l36-6.5 1.4 6.4-36 6.6z"/></svg>`;
+
 const CSS = `
 [${ATTR}="hidden"]{display:none!important}
 [${ATTR}="hidden-in"]>:not(.modopaz-card){display:none!important}
-.modopaz-card{--mp-bg:#f3f6f4;--mp-fg:#1c1f1d;--mp-muted:#566059;--mp-line:#c9d1cc;--mp-accent:#2f6b49;--mp-hover:#e2e9e5;
- box-sizing:border-box;margin:8px 16px;padding:12px 14px;border:1px solid var(--mp-line);border-radius:12px;
- background:var(--mp-bg);color:var(--mp-fg);font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;text-align:left}
-.modopaz-card[data-theme="dark"]{--mp-bg:#1b201d;--mp-fg:#eceeed;--mp-muted:#a9b1ab;--mp-line:#3a423d;--mp-accent:#7cc496;--mp-hover:#2a312d}
-.modopaz-card p{margin:0}.modopaz-card .t{font-weight:600}
-.modopaz-card .s{color:var(--mp-muted);margin-top:2px}
-.modopaz-card .row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center}
-.modopaz-card .row span{color:var(--mp-muted)}
-.modopaz-card button{font:inherit;cursor:pointer;padding:4px 12px;border-radius:999px;color:var(--mp-fg);
- background:transparent;border:1px solid var(--mp-accent)}
-.modopaz-card button:hover{background:var(--mp-hover)}
-.modopaz-card button:focus-visible{outline:2px solid var(--mp-accent);outline-offset:2px}
-.modopaz-card[data-state="revealed"]{padding:6px 14px}
-.modopaz-card[data-state="revealed"] .row{margin-top:0}
+.modopaz-card{--mp-bg:#f1f1ef;--mp-fg:#0f0f0f;--mp-btn:#e1e1de;--mp-btn-hover:#d3d3cf;
+ box-sizing:border-box;display:flex;align-items:center;gap:14px;margin:8px 12px;padding:14px 18px 14px 20px;
+ border-radius:28px;background:var(--mp-bg);color:var(--mp-fg);
+ font:600 17px/1.3 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;text-align:left}
+.modopaz-card[data-theme="dark"]{--mp-bg:#2a2a28;--mp-fg:#f4f4f2;--mp-btn:#3d3d3a;--mp-btn-hover:#4b4b47}
+.modopaz-card .ic{flex:none;display:flex;color:var(--mp-fg)}
+.modopaz-card .t{flex:1;min-width:0;margin:0}
+.modopaz-card button{flex:none;font:inherit;font-size:16px;font-weight:700;cursor:pointer;padding:10px 24px;border:0;
+ border-radius:999px;color:var(--mp-fg);background:var(--mp-btn)}
+.modopaz-card button:hover{background:var(--mp-btn-hover)}
+.modopaz-card button:focus-visible{outline:2px solid var(--mp-fg);outline-offset:2px}
+.modopaz-card[data-state="revealed"]{padding:8px 18px 8px 20px;font-size:15px;font-weight:500}
+.modopaz-card[data-state="revealed"] .ic{display:none}
+.modopaz-card[data-state="revealed"] button{padding:6px 16px;font-size:14px}
 `;
 
 export class ContentController {
@@ -229,26 +231,16 @@ export class ContentController {
     const reason = (card as any)._reason as string;
     card.replaceChildren();
     card.dataset.state = st.revealed ? 'revealed' : 'hidden';
-    const row = el('div', undefined, 'row');
 
     if (st.revealed) {
-      row.append(el('span', 'Publicación mostrada.'), btn('Ocultar de nuevo', () => this.setRevealed(post, st, false)));
-      card.append(row);
+      card.title = '';
+      card.append(el('p', 'Publicación política mostrada', 't'), btn('Ocultar', () => this.setRevealed(post, st, false)));
       return;
     }
-    const why = el('p', `Coincide con: ${reason}.`, 's');
-    why.hidden = true;
-    why.setAttribute('role', 'status');
-    card.append(
-      el('p', 'Publicación oculta por NoPoliticsPlease', 't'),
-      el('p', 'Este contenido coincide con el filtro político que has activado.', 's'),
-      why,
-    );
-    row.append(
-      btn('Mostrar publicación', () => this.setRevealed(post, st, true)),
-      btn('¿Por qué?', () => (why.hidden = !why.hidden)),
-    );
-    card.append(row);
+    card.title = `Coincide con: ${reason}`;
+    const icon = el('span', undefined, 'ic');
+    icon.innerHTML = ICON;
+    card.append(icon, el('p', 'Publicación política oculta', 't'), btn('Mostrar', () => this.setRevealed(post, st, true)));
   }
 
   /** El usuario puede cambiar el tema de la página (o del sistema) sin recargar. */
