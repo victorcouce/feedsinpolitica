@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoPoliticsPlease · Silencia la política en tus redes</title>
+<meta name="description" content="Extensión de Chrome que pliega las publicaciones políticas de tu feed en X, YouTube, Bluesky y más. Todo se analiza en tu navegador.">
+<link rel="icon" href="privacy/icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F2F2F0}
+a{color:#0B0B0B}a:hover{color:#3A3A37}
+a:focus-visible,button:focus-visible{outline:3px solid #0B0B0B;outline-offset:3px}
+.dark a:focus-visible,.dark button:focus-visible{outline-color:#FCFE6A}
+.cta{transition:transform 160ms cubic-bezier(.2,.8,.2,1)}
+.cta:active{transform:scale(.97)}
+.post .c{display:grid;grid-template-rows:1fr;opacity:1;filter:blur(0);transition:grid-template-rows 520ms cubic-bezier(.2,.8,.2,1) var(--d,0ms),opacity 260ms ease var(--d,0ms),filter 260ms ease var(--d,0ms)}
+.post .pill{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows 520ms cubic-bezier(.2,.8,.2,1) var(--d,0ms),opacity 300ms ease calc(var(--d,0ms) + 180ms)}
+.post .c>div,.post .pill>div{overflow:hidden;min-height:0}
+.post.is-muted .c{grid-template-rows:0fr;opacity:0;filter:blur(6px)}
+.post.is-muted .pill{grid-template-rows:1fr;opacity:1}
+.tape{transform-box:fill-box;transform-origin:center}
+.post.is-muted .tape{animation:slap 420ms cubic-bezier(.2,1.4,.4,1) calc(var(--d,0ms) + 260ms) both}
+@keyframes slap{from{transform:scale(1.8) rotate(-14deg);opacity:0}to{transform:none;opacity:1}}
+.knob{transition:transform 260ms cubic-bezier(.2,.8,.2,1)}
+.count{transition:color 200ms ease}
+.loop-knob{animation:loopKnob 2.6s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes loopKnob{0%,35%{transform:translateX(0)}50%,85%{transform:translateX(24px)}100%{transform:translateX(0)}}
+.loop-track{animation:loopTrack 2.6s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes loopTrack{0%,35%{background:#3A3A37}50%,85%{background:#FCFE6A}100%{background:#3A3A37}}
+.loop-seg{animation:loopSeg 4s steps(1) infinite}
+@keyframes loopSeg{0%{transform:translateX(0)}25%{transform:translateX(100%)}50%{transform:translateX(200%)}75%{transform:translateX(300%)}}
+.loop-fold{animation:loopFold 3s cubic-bezier(.2,.8,.2,1) infinite;transform-origin:top}
+@keyframes loopFold{0%,30%{transform:scaleY(1);opacity:1}50%,85%{transform:scaleY(.28);opacity:.5}100%{transform:scaleY(1);opacity:1}}
+@media (prefers-reduced-motion: reduce){
+.post .c,.post .pill,.knob,.cta{transition:none!important}
+.post.is-muted .tape,.loop-knob,.loop-track,.loop-seg,.loop-fold{animation:none!important}
+}
+</style>
+
+</head>
+<body style="margin:0">
+
+
+<div style="min-height: 100vh; background: #F2F2F0; color: #0B0B0B; font-family: Geist, system-ui, sans-serif">
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(242,242,240,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid #E4E4E2">
+<nav aria-label="Principal" style="max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#inicio" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+<path d="M32.0 4.0 37.8 14.0 48.7 10.1 46.7 21.5 57.6 25.5 48.7 33.0 54.5 43.0 42.9 43.0 40.9 54.4 32.0 47.0 16.0 61.0 21.1 43.0 9.5 43.0 15.3 33.0 6.4 25.5 17.3 21.5 15.3 10.1 26.2 14.0Z" fill="#0B0B0B"></path>
+<path d="M3.5 30.5 58.5 20.8 60.5 32 5.5 41.7Z" fill="#FCFE6A" stroke="#F2F2F0" stroke-width="2.4" stroke-linejoin="round" paint-order="stroke"></path>
+</svg>
+<span style="font-size: 18px; letter-spacing: -0.04em; font-weight: 800">NoPolitics<span style="font-weight: 400">Please</span></span>
+</a>
+<div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap">
+<a href="#como-funciona" style="font-size: 15px; font-weight: 600; text-decoration: none">Cómo funciona</a>
+<a href="#instalar" class="cta" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #0B0B0B; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none">Añadir a Chrome</a>
+</div>
+</nav>
+</header>
+
+<main id="inicio">
+
+<section style="max-width: 1120px; margin: 0 auto; padding: 72px 24px 96px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<span style="align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: #0B0B0B; color: #FCFE6A; font-size: 14px; font-weight: 700">Extensión para Chrome</span>
+<h1 style="margin: 0; font-size: clamp(44px, 6vw, 76px); line-height: 0.98; letter-spacing: -0.055em; font-weight: 800">Silencia la política en tus redes.</h1>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #4A4A46; max-width: 520px">NoPoliticsPlease pliega las publicaciones políticas de tu feed en X, YouTube, Bluesky y cinco redes más. El resto sigue igual, y puedes ver cualquier publicación con un toque.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<a href="#instalar" class="cta" style="display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 26px; border-radius: 999px; background: #FCFE6A; color: #0B0B0B; font-size: 17px; font-weight: 800; text-decoration: none; box-shadow: inset 0 0 0 2px #0B0B0B">
+<svg width="22" height="22" viewBox="0 0 512 512" fill="#0B0B0B" aria-hidden="true"><path d="M188.8,255.93A67.2,67.2,0,1,0,256,188.75,67.38,67.38,0,0,0,188.8,255.93Z"></path><path d="M476.75,217.79s0,0,0,.05a206.63,206.63,0,0,0-7-28.84h-.11a202.16,202.16,0,0,1,7.07,29h0a203.5,203.5,0,0,0-7.07-29H314.24c19.05,17,31.36,40.17,31.36,67.05a86.55,86.55,0,0,1-12.31,44.73L231,478.45a2.44,2.44,0,0,1,0,.27V479h0v-.26A224,224,0,0,0,256,480c6.84,0,13.61-.39,20.3-1a222.91,222.91,0,0,0,29.78-4.74C405.68,451.52,480,362.4,480,255.94A225.25,225.25,0,0,0,476.75,217.79Z"></path><path d="M256,345.5c-33.6,0-61.6-17.91-77.29-44.79L76,123.05l-.14-.24A224,224,0,0,0,207.4,474.55l0-.05,77.69-134.6A84.13,84.13,0,0,1,256,345.5Z"></path><path d="M91.29,104.57l77.35,133.25A89.19,89.19,0,0,1,256,166H461.17a246.51,246.51,0,0,0-25.78-43.94l.12.08A245.26,245.26,0,0,1,461.17,166h.17a245.91,245.91,0,0,0-25.66-44,2.63,2.63,0,0,1-.35-.26A223.93,223.93,0,0,0,91.14,104.34l.14.24Z"></path></svg>
+Añadir a Chrome
+</a>
+<a href="#como-funciona" style="min-height: 44px; display: flex; align-items: center; padding: 0 8px; font-size: 16px; font-weight: 600">Ver cómo funciona</a>
+</div>
+</div>
+
+<div id="demo" style="flex: 1 1 420px; min-width: 0; max-width: 480px; margin: 0 auto; position: relative">
+<div id="demo-card" class="dark" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 14px 14px 20px; border-radius: 28px; background: #0B0B0B; color: #F2F2F0; transition: background 260ms ease, color 260ms ease; margin-bottom: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<strong id="demo-label" style="font-size: 18px; font-weight: 800; letter-spacing: -0.02em">Desactivado</strong>
+<span id="demo-line" aria-live="polite" style="font-size: 13px; font-weight: 500; opacity: 0.75">Tu feed, tal cual</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<button id="auto-btn" aria-label="Pausar demostración" style="width: 44px; height: 44px; border: 0; border-radius: 22px; background: rgba(242,242,240,0.1); color: #F2F2F0; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg id="ico-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg><svg id="ico-play" style="display:none" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7Z"></path></svg></button>
+<button id="sw" role="switch" aria-checked="false" aria-labelledby="demo-label" style="width: 60px; height: 36px; padding: 4px; border: 0; border-radius: 18px; background: #3A3A37; cursor: pointer; display: flex; align-items: center; transition: background 260ms ease"><span id="knob" class="knob" style="width: 28px; height: 28px; border-radius: 14px; background: #FFFFFF; transform: translateX(0px)"></span>
+</button>
+</div>
+</div>
+
+<div aria-label="Feed de ejemplo" style="background: #FFFFFF; border-radius: 28px; padding: 8px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 24px 60px rgba(11,11,11,0.10)">
+
+<article class="post" data-pol="0" style="--d: 0ms; border-radius: 20px; background: #FFFFFF; transition: background 300ms ease">
+<div class="c"><div>
+<div style="display: flex; gap: 12px; padding: 14px 16px">
+<span aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 20px; background: #FCFE6A; color: #0B0B0B; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">L</span>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px"><strong style="font-weight: 700">Lucía</strong> <span style="color: #6B6B66">@lucia.cocina</span></span>
+<span style="font-size: 15px; line-height: 1.45">Tortilla de patatas en 15 minutos. El truco: cebolla pochada la noche anterior.</span>
+</div>
+</div>
+</div></div>
+<div class="pill"><div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px">
+<svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+<path d="M32.0 4.0 37.8 14.0 48.7 10.1 46.7 21.5 57.6 25.5 48.7 33.0 54.5 43.0 42.9 43.0 40.9 54.4 32.0 47.0 16.0 61.0 21.1 43.0 9.5 43.0 15.3 33.0 6.4 25.5 17.3 21.5 15.3 10.1 26.2 14.0Z" fill="#0B0B0B"></path>
+<path class="tape" d="M3.5 30.5 58.5 20.8 60.5 32 5.5 41.7Z" fill="#FCFE6A" stroke="#F2F2F0" stroke-width="2.4" paint-order="stroke"></path>
+</svg>
+<span style="flex: 1; font-size: 14px; font-weight: 600">Publicación política oculta</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #E4E4E2; font-size: 13px; font-weight: 700">Mostrar</span>
+</div>
+</div></div>
+</article>
+
+<article class="post" data-pol="1" style="--d: 0ms; border-radius: 20px; background: #FFFFFF; transition: background 300ms ease">
+<div class="c"><div>
+<div style="display: flex; gap: 12px; padding: 14px 16px">
+<span aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 20px; background: #C9C9C4; color: #0B0B0B; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">P</span>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px"><strong style="font-weight: 700">Pleno Directo</strong> <span style="color: #6B6B66">@plenodirecto</span></span>
+<span style="font-size: 15px; line-height: 1.45">Hilo: lo que nadie te cuenta del debate de ayer en el parlamento. Abro encuesta: ¿quién ganó?</span>
+</div>
+</div>
+</div></div>
+<div class="pill"><div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px">
+<svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+<path d="M32.0 4.0 37.8 14.0 48.7 10.1 46.7 21.5 57.6 25.5 48.7 33.0 54.5 43.0 42.9 43.0 40.9 54.4 32.0 47.0 16.0 61.0 21.1 43.0 9.5 43.0 15.3 33.0 6.4 25.5 17.3 21.5 15.3 10.1 26.2 14.0Z" fill="#0B0B0B"></path>
+<path class="tape" d="M3.5 30.5 58.5 20.8 60.5 32 5.5 41.7Z" fill="#FCFE6A" stroke="#F2F2F0" stroke-width="2.4" paint-order="stroke"></path>
+</svg>
+<span style="flex: 1; font-size: 14px; font-weight: 600">Publicación política oculta</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #E4E4E2; font-size: 13px; font-weight: 700">Mostrar</span>
+</div>
+</div></div>
+</article>
+
+<article class="post" data-pol="0" style="--d: 0ms; border-radius: 20px; background: #FFFFFF; transition: background 300ms ease">
+<div class="c"><div>
+<div style="display: flex; gap: 12px; padding: 14px 16px">
+<span aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 20px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">M</span>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px"><strong style="font-weight: 700">Marcos</strong> <span style="color: #6B6B66">@marcos.dev</span></span>
+<span style="font-size: 15px; line-height: 1.45">Por fin el editor tiene modo enfoque. Mis tardes acaban de mejorar mucho.</span>
+</div>
+</div>
+</div></div>
+<div class="pill"><div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px">
+<svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+<path d="M32.0 4.0 37.8 14.0 48.7 10.1 46.7 21.5 57.6 25.5 48.7 33.0 54.5 43.0 42.9 43.0 40.9 54.4 32.0 47.0 16.0 61.0 21.1 43.0 9.5 43.0 15.3 33.0 6.4 25.5 17.3 21.5 15.3 10.1 26.2 14.0Z" fill="#0B0B0B"></path>
+<path class="tape" d="M3.5 30.5 58.5 20.8 60.5 32 5.5 41.7Z" fill="#FCFE6A" stroke="#F2F2F0" stroke-width="2.4" paint-order="stroke"></path>
+</svg>
+<span style="flex: 1; font-size: 14px; font-weight: 600">Publicación política oculta</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #E4E4E2; font-size: 13px; font-weight: 700">Mostrar</span>
+</div>
+</div></div>
+</article>
+
+<article class="post" data-pol="1" style="--d: 140ms; border-radius: 20px; background: #FFFFFF; transition: background 300ms ease">
+<div class="c"><div>
+<div style="display: flex; gap: 12px; padding: 14px 16px">
+<span aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 20px; background: #C9C9C4; color: #0B0B0B; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">O</span>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px"><strong style="font-weight: 700">Opinión Ya</strong> <span style="color: #6B6B66">@opinionya</span></span>
+<span style="font-size: 15px; line-height: 1.45">Lo de hoy en campaña es un escándalo. Los de siempre vuelven a las andadas. Comparte si estás harto.</span>
+</div>
+</div>
+</div></div>
+<div class="pill"><div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px">
+<svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+<path d="M32.0 4.0 37.8 14.0 48.7 10.1 46.7 21.5 57.6 25.5 48.7 33.0 54.5 43.0 42.9 43.0 40.9 54.4 32.0 47.0 16.0 61.0 21.1 43.0 9.5 43.0 15.3 33.0 6.4 25.5 17.3 21.5 15.3 10.1 26.2 14.0Z" fill="#0B0B0B"></path>
+<path class="tape" d="M3.5 30.5 58.5 20.8 60.5 32 5.5 41.7Z" fill="#FCFE6A" stroke="#F2F2F0" stroke-width="2.4" paint-order="stroke"></path>
+</svg>
+<span style="flex: 1; font-size: 14px; font-weight: 600">Publicación política oculta</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #E4E4E2; font-size: 13px; font-weight: 700">Mostrar</span>
+</div>
+</div></div>
+</article>
+
+<article class="post" data-pol="0" style="--d: 0ms; border-radius: 20px; background: #FFFFFF; transition: background 300ms ease">
+<div class="c"><div>
+<div style="display: flex; gap: 12px; padding: 14px 16px">
+<span aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 20px; background: #E4E4E2; color: #0B0B0B; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">A</span>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px"><strong style="font-weight: 700">Ana</strong> <span style="color: #6B6B66">@ana.corre</span></span>
+<span style="font-size: 15px; line-height: 1.45">Primer 10K sin parar. Ruta junto al río, 52 minutos. Mañana, descanso.</span>
+</div>
+</div>
+</div></div>
+<div class="pill"><div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px">
+<svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+<path d="M32.0 4.0 37.8 14.0 48.7 10.1 46.7 21.5 57.6 25.5 48.7 33.0 54.5 43.0 42.9 43.0 40.9 54.4 32.0 47.0 16.0 61.0 21.1 43.0 9.5 43.0 15.3 33.0 6.4 25.5 17.3 21.5 15.3 10.1 26.2 14.0Z" fill="#0B0B0B"></path>
+<path class="tape" d="M3.5 30.5 58.5 20.8 60.5 32 5.5 41.7Z" fill="#FCFE6A" stroke="#F2F2F0" stroke-width="2.4" paint-order="stroke"></path>
+</svg>
+<span style="flex: 1; font-size: 14px; font-weight: 600">Publicación política oculta</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #E4E4E2; font-size: 13px; font-weight: 700">Mostrar</span>
+</div>
+</div></div>
+</article>
+
+<article class="post" data-pol="1" style="--d: 280ms; border-radius: 20px; background: #FFFFFF; transition: background 300ms ease">
+<div class="c"><div>
+<div style="display: flex; gap: 12px; padding: 14px 16px">
+<span aria-hidden="true" style="flex: none; width: 40px; height: 40px; border-radius: 20px; background: #C9C9C4; color: #0B0B0B; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800">E</span>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px"><strong style="font-weight: 700">El Hemiciclo</strong> <span style="color: #6B6B66">@elhemiciclo</span></span>
+<span style="font-size: 15px; line-height: 1.45">Última hora: votación ajustada y acusaciones cruzadas entre bancadas. Seguimos informando.</span>
+</div>
+</div>
+</div></div>
+<div class="pill"><div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px">
+<svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+<path d="M32.0 4.0 37.8 14.0 48.7 10.1 46.7 21.5 57.6 25.5 48.7 33.0 54.5 43.0 42.9 43.0 40.9 54.4 32.0 47.0 16.0 61.0 21.1 43.0 9.5 43.0 15.3 33.0 6.4 25.5 17.3 21.5 15.3 10.1 26.2 14.0Z" fill="#0B0B0B"></path>
+<path class="tape" d="M3.5 30.5 58.5 20.8 60.5 32 5.5 41.7Z" fill="#FCFE6A" stroke="#F2F2F0" stroke-width="2.4" paint-order="stroke"></path>
+</svg>
+<span style="flex: 1; font-size: 14px; font-weight: 600">Publicación política oculta</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #E4E4E2; font-size: 13px; font-weight: 700">Mostrar</span>
+</div>
+</div></div>
+</article>
+
+</div>
+</div>
+</section>
+
+<section id="como-funciona" class="dark" style="background: #0B0B0B; color: #F2F2F0">
+<div style="max-width: 1120px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 640px">
+<h2 style="margin: 0; font-size: clamp(36px, 4.5vw, 56px); line-height: 1; letter-spacing: -0.05em; font-weight: 800">Tres pasos y a respirar.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.5; color: #A6A6A0">Sin configuraciones eternas: lo activas, eliges cuánto tiempo y sigues navegando.</p>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
+
+<li style="background: #1E1E1C; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 20px">
+<div aria-hidden="true" style="height: 120px; border-radius: 20px; background: #0B0B0B; display: flex; align-items: center; justify-content: center">
+<span class="loop-track" style="width: 60px; height: 36px; padding: 4px; box-sizing: border-box; border-radius: 18px; background: #3A3A37; display: flex; align-items: center">
+<span class="loop-knob" style="width: 28px; height: 28px; border-radius: 14px; background: #FFFFFF; display: block"></span>
+</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #FCFE6A">01</span>
+<h3 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Actívalo</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #A6A6A0">Un interruptor en la barra de Chrome. Nada más.</p>
+</div>
+</li>
+
+<li style="background: #1E1E1C; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 20px">
+<div aria-hidden="true" style="height: 120px; border-radius: 20px; background: #0B0B0B; display: flex; align-items: center; justify-content: center; padding: 0 20px">
+<div style="position: relative; width: 100%; max-width: 260px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 4px; border-radius: 999px; background: #1E1E1C">
+<span class="loop-seg" style="position: absolute; left: 4px; top: 4px; bottom: 4px; width: calc((100% - 8px) / 4); border-radius: 999px; background: #FCFE6A"></span>
+<span style="position: relative; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; mix-blend-mode: difference; color: #FFFFFF">30m</span>
+<span style="position: relative; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; mix-blend-mode: difference; color: #FFFFFF">2h</span>
+<span style="position: relative; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; mix-blend-mode: difference; color: #FFFFFF">8h</span>
+<span style="position: relative; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; mix-blend-mode: difference; color: #FFFFFF">∞</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #FCFE6A">02</span>
+<h3 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Elige cuánto tiempo</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #A6A6A0">30 minutos, 2 horas, 8 horas o hasta que lo apagues. Y dos niveles: suave o amplio.</p>
+</div>
+</li>
+
+<li style="background: #1E1E1C; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 20px">
+<div aria-hidden="true" style="height: 120px; border-radius: 20px; background: #0B0B0B; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 28px">
+<span style="height: 14px; border-radius: 7px; background: #3A3A37; width: 80%"></span>
+<span class="loop-fold" style="height: 30px; border-radius: 10px; background: #FCFE6A; width: 100%"></span>
+<span style="height: 14px; border-radius: 7px; background: #3A3A37; width: 64%"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #FCFE6A">03</span>
+<h3 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em">Navega con calma</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #A6A6A0">Lo político se pliega mientras haces scroll. Si quieres verlo, lo abres.</p>
+</div>
+</li>
+
+</ol>
+</div>
+</section>
+
+<section style="max-width: 1120px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: clamp(36px, 4.5vw, 56px); line-height: 1; letter-spacing: -0.05em; font-weight: 800">Ocho redes, un solo interruptor.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.5; color: #4A4A46">Actívala o desactívala en cada red por separado.</p>
+</div>
+<ul style="flex: 1 1 420px; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px">
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">X</span>
+X
+</li>
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">Y</span>
+YouTube
+</li>
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">B</span>
+Bluesky
+</li>
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">M</span>
+Menéame
+</li>
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">M</span>
+Mastodon
+</li>
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">T</span>
+Threads
+</li>
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">R</span>
+Reddit
+</li>
+
+<li style="display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; background: #E4E4E2; font-size: 17px; font-weight: 700">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 16px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800">L</span>
+LinkedIn
+</li>
+
+</ul>
+</section>
+
+<section style="max-width: 1120px; margin: 0 auto; padding: 0 24px 96px">
+<div style="background: #E4E4E2; border-radius: 36px; padding: 48px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+<div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span aria-hidden="true" style="width: 72px; height: 72px; border-radius: 36px; background: #0B0B0B; color: #FCFE6A; display: flex; align-items: center; justify-content: center">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+</span>
+<h2 style="margin: 0; font-size: clamp(32px, 4vw, 48px); line-height: 1; letter-spacing: -0.05em; font-weight: 800">Privado por diseño.</h2>
+</div>
+<ul style="flex: 2 1 420px; min-width: 0; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<li style="background: #F2F2F0; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px; font-weight: 800">Análisis local</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A46">Todo se analiza en tu navegador.</span></li>
+<li style="background: #F2F2F0; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px; font-weight: 800">Nada sale de tu equipo</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A46">El texto no se envía a ningún servidor ni se guarda.</span></li>
+<li style="background: #F2F2F0; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px; font-weight: 800">Reversible</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A46">No se borra nada: siempre puedes mostrar una publicación.</span></li>
+</ul>
+</div>
+</section>
+
+<section id="instalar" style="background: #FCFE6A">
+<div style="max-width: 1120px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px">
+<h2 style="margin: 0; font-size: clamp(44px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.055em; font-weight: 800">Menos ruido.<br>Más calma.</h2>
+<a href="https://github.com/victorcouce/nopoliticsplease" class="cta" style="display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 0 30px; border-radius: 999px; background: #0B0B0B; color: #FFFFFF; font-size: 18px; font-weight: 800; text-decoration: none">
+<svg width="24" height="24" viewBox="0 0 512 512" fill="#FFFFFF" aria-hidden="true"><path d="M188.8,255.93A67.2,67.2,0,1,0,256,188.75,67.38,67.38,0,0,0,188.8,255.93Z"></path><path d="M476.75,217.79s0,0,0,.05a206.63,206.63,0,0,0-7-28.84h-.11a202.16,202.16,0,0,1,7.07,29h0a203.5,203.5,0,0,0-7.07-29H314.24c19.05,17,31.36,40.17,31.36,67.05a86.55,86.55,0,0,1-12.31,44.73L231,478.45a2.44,2.44,0,0,1,0,.27V479h0v-.26A224,224,0,0,0,256,480c6.84,0,13.61-.39,20.3-1a222.91,222.91,0,0,0,29.78-4.74C405.68,451.52,480,362.4,480,255.94A225.25,225.25,0,0,0,476.75,217.79Z"></path><path d="M256,345.5c-33.6,0-61.6-17.91-77.29-44.79L76,123.05l-.14-.24A224,224,0,0,0,207.4,474.55l0-.05,77.69-134.6A84.13,84.13,0,0,1,256,345.5Z"></path><path d="M91.29,104.57l77.35,133.25A89.19,89.19,0,0,1,256,166H461.17a246.51,246.51,0,0,0-25.78-43.94l.12.08A245.26,245.26,0,0,1,461.17,166h.17a245.91,245.91,0,0,0-25.66-44,2.63,2.63,0,0,1-.35-.26A223.93,223.93,0,0,0,91.14,104.34l.14.24Z"></path></svg>
+Añadir a Chrome
+</a>
+</div>
+</section>
+
+</main>
+
+<footer style="background: #0B0B0B; color: #A6A6A0">
+<div style="max-width: 1120px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px">
+<span><strong style="color: #F2F2F0; font-weight: 800">NoPolitics</strong><span style="color: #F2F2F0">Please</span> · Menos ruido. Más calma.</span>
+<span><a href="privacy/" style="color: #F2F2F0">Privacidad</a> · <a href="https://github.com/victorcouce/nopoliticsplease" style="color: #F2F2F0">GitHub</a> · Chrome es una marca de Google LLC.</span>
+</div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var on=false,auto=true,timer;
+  var card=document.getElementById('demo-card'),line=document.getElementById('demo-line'),title=document.getElementById('demo-label'),
+      sw=document.getElementById('sw'),knob=document.getElementById('knob'),ab=document.getElementById('auto-btn'),
+      pause=document.getElementById('ico-pause'),play=document.getElementById('ico-play');
+  var posts=[].slice.call(document.querySelectorAll('.post'));
+  function render(){
+    card.style.background=on?'#FCFE6A':'#0B0B0B';card.style.color=on?'#0B0B0B':'#F2F2F0';ab.style.color=card.style.color;
+    ab.style.background=on?'rgba(11,11,11,0.08)':'rgba(242,242,240,0.1)';
+    title.textContent=on?'Activado':'Desactivado';line.textContent=on?'3 publicaciones políticas ocultas':'Tu feed, tal cual';
+    sw.setAttribute('aria-checked',on);sw.style.background=on?'#0B0B0B':'#3A3A37';
+    knob.style.background=on?'#FCFE6A':'#FFFFFF';knob.style.transform='translateX('+(on?24:0)+'px)';
+    posts.forEach(function(p){var m=p.dataset.pol==='1'&&on;p.classList.toggle('is-muted',m);p.style.background=m?'#F2F2F0':'#FFFFFF';});
+    pause.style.display=auto?'':'none';play.style.display=auto?'none':'';ab.setAttribute('aria-label',auto?'Pausar demostración':'Reproducir demostración');
+  }
+  sw.addEventListener('click',function(){on=!on;auto=false;render();});
+  ab.addEventListener('click',function(){auto=!auto;render();});
+  var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  if(reduce){auto=false;on=true;}else{timer=setInterval(function(){if(auto){on=!on;render();}},3400);}
+  render();
+})();
+</script>
+</body>
+</html>
