@@ -97,3 +97,17 @@ describe('registro de sitios', () => {
     [undefined, false],
   ])('%s → %s', (url, ok) => expect(isSupportedUrl(url as string | undefined)).toBe(ok));
 });
+
+describe('cuentas de partidos', () => {
+  it('Bluesky: oculta aunque el texto sea neutral', async () => {
+    document.body.innerHTML = `<main>
+      <div data-testid="feedItem-by-psoe.bsky.social"><div data-testid="postText">${NEUTRAL}</div></div>
+      <div data-testid="feedItem-by-psoe.bsky.social"><div data-testid="postText">${NEUTRAL}</div></div>
+      <div data-testid="feedItem-by-alguien.bsky.social"><div data-testid="postText">${NEUTRAL}</div></div></main>`;
+    const c = new ContentController(blueskyAdapter, classify, document);
+    c.start('soft');
+    await tick();
+    expect(document.querySelectorAll('.modopaz-card')).toHaveLength(2);
+    c.stop();
+  });
+});

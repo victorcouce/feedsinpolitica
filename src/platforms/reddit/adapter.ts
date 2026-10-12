@@ -4,5 +4,6 @@ import { createAdapter } from '../create-adapter';
 export const redditAdapter = createAdapter({
   items: 'shreddit-post, div.thing.link',
   text: '[slot="title"], [slot="text-body"], a.title, .usertext-body',
+  author: (post) => [post.getAttribute('author') ?? post.getAttribute('data-author') ?? ''],
   extra: (post) => [post.getAttribute('post-title') ?? ''],
 });

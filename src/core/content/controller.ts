@@ -1,4 +1,5 @@
 import { fingerprint } from '../classifier/normalize';
+import { isPartyAccount } from '../classifier/accounts';
 import { detectTheme } from './theme';
 import type { Category, Classification, Classifier, FilterMode } from '../../types';
 
@@ -6,6 +7,8 @@ export interface PlatformAdapter {
   /** Publicaciones contenidas en (o que contienen a) `root`. */
   findPosts(root: ParentNode | Element): HTMLElement[];
   extractText(post: HTMLElement): string;
+  /** Nombre visible e identificadores del autor, para detectar cuentas de partidos. */
+  extractAuthor?(post: HTMLElement): string[];
   /** 'before' (por defecto): la tarjeta es hermana y se oculta la publicación.
    *  'inside': la tarjeta va dentro y se ocultan sus hijos (para rejillas con layout propio). */
   placement?: 'before' | 'inside';
@@ -22,6 +25,7 @@ const STYLE_ID = 'modopaz-style';
 const BATCH = 20;
 
 const LABELS: Record<Category, string> = {
+  accounts: 'cuenta de partido político',
   actors: 'actores políticos',
   electoral: 'procesos electorales',
   institutions: 'instituciones',
@@ -164,13 +168,16 @@ export class ContentController {
 
   private process(post: HTMLElement): void {
     const text = this.adapter.extractText(post);
+    const party = isPartyAccount(this.adapter.extractAuthor?.(post) ?? []);
     const prev = this.state.get(post);
-    const fp = fingerprint(text);
+    const fp = fingerprint(party ? `\u0000${text}` : text);
     if (prev && prev.fp === fp) return;
     if (prev) this.unhide(post, prev);
-    if (!text) return;
+    if (!text && !party) return;
 
-    const result = this.classify(text, this.mode);
+    const result: Classification = party
+      ? { political: true, confidence: 1, categories: ['accounts'], reasonCodes: ['cat:accounts'] }
+      : this.classify(text, this.mode);
     const next: PostState = { fp, revealed: false };
     this.state.set(post, next);
     if (result.political) this.hide(post, next, result);

@@ -10,10 +10,12 @@ interface Options {
   keep?: (text: string) => boolean;
   /** Texto adicional que no está en nodos de texto (atributos, alt…). */
   extra?: (post: HTMLElement) => string[];
+  /** Nombre visible e identificadores del autor. */
+  author?: (post: HTMLElement) => string[];
 }
 
 /** Adaptador genérico: sólo hay que describir el DOM de la plataforma. */
-export function createAdapter({ items, text, placement, keep, extra }: Options): PlatformAdapter {
+export function createAdapter({ items, text, placement, keep, extra, author }: Options): PlatformAdapter {
   // Ante elementos anidados se actúa siempre sobre el más externo.
   const outermost = (el: HTMLElement): HTMLElement => {
     let cur = el;
@@ -23,6 +25,7 @@ export function createAdapter({ items, text, placement, keep, extra }: Options):
 
   return {
     placement,
+    extractAuthor: author,
     findPosts(root) {
       const found = new Set<HTMLElement>();
       if (root instanceof Element) {

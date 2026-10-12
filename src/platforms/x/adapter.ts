@@ -15,6 +15,14 @@ export const xAdapter: PlatformAdapter = {
     return found;
   },
 
+  // Primer bloque de usuario: nombre visible y @usuario del autor (no del citado).
+  extractAuthor(post) {
+    const user = post.querySelector('[data-testid="User-Name"]');
+    if (!user) return [];
+    const handle = user.querySelector('a[href^="/"]:not([href*="/status/"])')?.getAttribute('href')?.slice(1) ?? '';
+    return [user.querySelector('span')?.textContent ?? '', handle];
+  },
+
   // Texto del tuit y del citado (mismo <article>), título de la tarjeta de
   // enlace y texto alternativo de imágenes escrito por el autor.
   extractText(post) {

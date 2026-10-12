@@ -12,7 +12,7 @@ export interface Settings {
   display: { hiddenPostStyle: 'compact' };
 }
 
-export type Category = 'actors' | 'electoral' | 'institutions' | 'expressions' | 'debates';
+export type Category = 'accounts' | 'actors' | 'electoral' | 'institutions' | 'expressions' | 'debates';
 
 export interface Classification {
   political: boolean;

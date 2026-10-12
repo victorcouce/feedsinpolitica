@@ -8,4 +8,5 @@ export const threadsAdapter = createAdapter({
   text: 'span[dir="auto"]',
   placement: 'inside',
   keep: (t) => !NOISE.test(t),
+  author: (post) => [post.querySelector('a[href^="/@"]')?.getAttribute('href')?.slice(2).split('/')[0] ?? ''],
 });
