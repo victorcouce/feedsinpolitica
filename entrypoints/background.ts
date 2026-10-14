@@ -1,9 +1,6 @@
 import { ALARM, KEY, TOTAL_KEY, getSettings, getTotal, saveSettings } from '../src/storage/settings';
 import { expire, isActive } from '../src/features/sessions/session';
 
-const BUBBLE =
-  'M20 8H44C51.7 8 58 14.3 58 22V34C58 41.7 51.7 48 44 48H28L18.6 55.5C17.3 56.5 15.5 55.6 15.5 54V47.2C9.9 45.3 6 40.1 6 34V22C6 14.3 12.3 8 20 8Z';
-
 async function checkExpiry() {
   const s = await getSettings();
   const next = expire(s);
@@ -11,30 +8,23 @@ async function checkExpiry() {
   await syncIcon();
 }
 
-/** Relleno = filtrando; contorno = en pausa. */
-function drawIcon(size: number, on: boolean): ImageData {
+/** Icono de la app; en gris y atenuado cuando está en pausa. */
+async function drawIcon(size: number, on: boolean): Promise<ImageData> {
+  const res = await fetch(chrome.runtime.getURL(`/icon/${size}.png`));
+  const bitmap = await createImageBitmap(await res.blob());
   const canvas = new OffscreenCanvas(size, size);
   const ctx = canvas.getContext('2d')!;
-  ctx.scale(size / 64, size / 64);
-  const path = new Path2D(BUBBLE);
-  if (on) {
-    ctx.fillStyle = '#5FA572';
-    ctx.fill(path);
-    ctx.fillStyle = '#161917';
-  } else {
-    ctx.strokeStyle = ctx.fillStyle = '#80868B';
-    ctx.lineWidth = 5;
-    ctx.stroke(path);
+  if (!on) {
+    ctx.filter = 'grayscale(1)';
+    ctx.globalAlpha = 0.55;
   }
-  ctx.beginPath();
-  ctx.roundRect(19, 24.5, 26, 7, 3.5);
-  ctx.fill();
+  ctx.drawImage(bitmap, 0, 0, size, size);
   return ctx.getImageData(0, 0, size, size);
 }
 
 async function syncIcon() {
   const on = isActive(await getSettings());
-  await chrome.action.setIcon({ imageData: { 16: drawIcon(16, on), 32: drawIcon(32, on) } });
+  await chrome.action.setIcon({ imageData: { 16: await drawIcon(16, on), 32: await drawIcon(32, on) } });
   await chrome.action.setBadgeBackgroundColor({ color: '#2F6B3E' });
   if (chrome.action.setBadgeTextColor) await chrome.action.setBadgeTextColor({ color: '#FFFFFF' });
   if (!on) await chrome.action.setBadgeText({ text: '' });
