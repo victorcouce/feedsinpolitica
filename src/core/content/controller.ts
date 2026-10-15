@@ -215,7 +215,7 @@ export class ContentController {
     card.className = 'modopaz-card';
     card.dataset.theme = detectTheme(this.doc);
     card.setAttribute('role', 'group');
-    card.setAttribute('aria-label', 'NoPoliticsPlease');
+    card.setAttribute('aria-label', 'FeedSinPolítica');
     (card as any)._reason = result.categories.map((c) => LABELS[c]).join(', ');
     this.renderCard(card, post, st);
     return card;

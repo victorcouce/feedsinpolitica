@@ -1,7 +1,7 @@
-# Ficha de Chrome Web Store: NoPoliticsPlease
+# Ficha de Chrome Web Store: FeedSinPolítica
 
 ## Nombre
-NoPoliticsPlease
+FeedSinPolítica
 
 ## Resumen (máx. 132 caracteres)
 Oculta publicaciones políticas de tu feed, de forma local y reversible. Sin cuentas ni servidores. Menos ruido, más calma.
@@ -14,7 +14,7 @@ Español
 
 ## Descripción detallada
 
-¿Harto de política en tu feed? NoPoliticsPlease oculta las publicaciones políticas mientras navegas, sin que tengas que dejar de usar tus redes.
+¿Harto de política en tu feed? FeedSinPolítica oculta las publicaciones políticas mientras navegas, sin que tengas que dejar de usar tus redes.
 
 CÓMO FUNCIONA
 Cuando activas el filtro, la extensión analiza el texto visible de cada publicación con un clasificador por reglas incluido en la propia extensión. Las que tratan de política o elecciones se sustituyen por una tarjeta compacta con un botón "Mostrar". Pasa el ratón por la tarjeta para ver con qué ha coincidido.
@@ -37,7 +37,7 @@ No elimina nada de las plataformas. Solo oculta visualmente en tu pantalla. Al d
 LIMITACIONES
 Funciona en ocho redes sociales y de noticias populares; en cualquier otro sitio no se ejecuta. El sistema es automático y puede equivocarse: puede ocultar algo que no es político o dejar pasar algo que sí lo es.
 
-NoPoliticsPlease es independiente y no está afiliada a ninguna plataforma.
+FeedSinPolítica es independiente y no está afiliada a ninguna plataforma.
 
 ## Pestaña Privacy practices
 

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/banner.png" alt="NoPoliticsPlease: ¿Harto de política en tu feed? Silénciala en X, YouTube, Bluesky y cinco redes más." width="100%">
+  <img src="docs/banner.png" alt="FeedSinPolítica: ¿Harto de política en tu feed? Silénciala en X, YouTube, Bluesky y cinco redes más." width="100%">
 </p>
 
-# NoPoliticsPlease
+# FeedSinPolítica
 
 Extensión de Chrome que oculta publicaciones políticas en redes sociales, de forma **local y reversible**. Menos ruido. Más calma.
 
