@@ -183,7 +183,7 @@ export function App() {
       <header className="brand">
         <Logo size={32} off={!active} />
         <h1>
-          NoPolitics<span>Please</span>
+          FeedSin<span>Política</span>
         </h1>
         <span className="tag">Menos ruido. Más calma.</span>
       </header>

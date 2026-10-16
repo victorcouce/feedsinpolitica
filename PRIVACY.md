@@ -1,8 +1,8 @@
-# Política de privacidad de NoPoliticsPlease
+# Política de privacidad de FeedSinPolítica
 
 **Última actualización:** 11 de octubre de 2026
 
-NoPoliticsPlease es una extensión de Chrome que oculta, de forma voluntaria y reversible, publicaciones de contenido político mientras navegas por redes sociales. Esta política explica qué hace la extensión con tu información.
+FeedSinPolítica es una extensión de Chrome que oculta, de forma voluntaria y reversible, publicaciones de contenido político mientras navegas por redes sociales. Esta política explica qué hace la extensión con tu información.
 
 **En resumen:** todo el análisis se hace dentro de tu navegador. La extensión no envía a ningún servidor el texto de las publicaciones ni ningún otro dato, no tiene cuentas de usuario y no incluye analítica ni publicidad.
 
@@ -52,7 +52,7 @@ Mientras navegas, la extensión mantiene en memoria, y solo mientras la pestaña
 
 ## 4. Qué información no se recopila
 
-NoPoliticsPlease **no** recopila, almacena ni transmite:
+FeedSinPolítica **no** recopila, almacena ni transmite:
 
 - el contenido de las publicaciones ni su texto;
 - tu historial de navegación ni las direcciones que visitas;
