@@ -72,7 +72,7 @@ Marcar las tres:
 
 ### URL de la política de privacidad
 URL pública de `PRIVACY.md` en GitHub, por ejemplo:
-`https://github.com/<usuario>/NoPoliticsPlease/blob/main/PRIVACY.md`
+`https://github.com/victorcouce/feedsinpolitica/blob/main/PRIVACY.md`
 (el repo debe ser público, o usa GitHub Pages).
 
 ## Recursos gráficos
