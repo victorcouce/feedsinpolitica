@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://victorcouce.github.io/feedsinpolitica/sitemap.xml

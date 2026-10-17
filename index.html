@@ -6,6 +6,26 @@
 <title>FeedSinPolítica · Silencia la política en tus redes</title>
 <meta name="description" content="Extensión de Chrome que pliega las publicaciones políticas de tu feed en X, YouTube, Bluesky y más. Todo se analiza en tu navegador.">
 <link rel="icon" href="privacy/icon.png">
+<link rel="canonical" href="https://victorcouce.github.io/feedsinpolitica/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#FCFE6A">
+<link rel="icon" type="image/png" sizes="32x32" href="public/icon/32.png">
+<link rel="apple-touch-icon" href="public/icon/128.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FeedSinPolítica">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="FeedSinPolítica · Silencia la política en tus redes">
+<meta property="og:description" content="Extensión de Chrome que pliega las publicaciones políticas de tu feed en X, YouTube, Bluesky y más. Todo se analiza en tu navegador.">
+<meta property="og:url" content="https://victorcouce.github.io/feedsinpolitica/">
+<meta property="og:image" content="https://victorcouce.github.io/feedsinpolitica/store-assets/feedsinpolitica-marquesina-1400x560.png">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="560">
+<meta property="og:image:alt" content="FeedSinPolítica: silencia la política en tus redes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FeedSinPolítica · Silencia la política en tus redes">
+<meta name="twitter:description" content="Extensión de Chrome que pliega las publicaciones políticas de tu feed en X, YouTube, Bluesky y más. Todo se analiza en tu navegador.">
+<meta name="twitter:image" content="https://victorcouce.github.io/feedsinpolitica/store-assets/feedsinpolitica-marquesina-1400x560.png">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "FeedSinPolítica", "description": "Extensión de Chrome que pliega las publicaciones políticas de tu feed en X, YouTube, Bluesky y más. Todo se analiza en tu navegador.", "applicationCategory": "BrowserApplication", "operatingSystem": "Chrome", "inLanguage": "es", "url": "https://victorcouce.github.io/feedsinpolitica/", "downloadUrl": "https://chromewebstore.google.com/detail/feedsinpol%C3%ADtica/hlmoolmnabogolkfmmeagikidhbhjofm", "image": "https://victorcouce.github.io/feedsinpolitica/store-assets/feedsinpolitica-marquesina-1400x560.png", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "author": {"@type": "Person", "name": "Victor Couce"}}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Qué es FeedSinPolítica?", "acceptedAnswer": {"@type": "Answer", "text": "Una extensión gratuita de Chrome que oculta las publicaciones políticas de tu feed en redes sociales. Las sustituye por una tarjeta compacta con un botón «Mostrar» para que puedas verlas si quieres."}}, {"@type": "Question", "name": "¿En qué redes funciona?", "acceptedAnswer": {"@type": "Answer", "text": "En X (Twitter), YouTube, Bluesky, Menéame, Mastodon, Threads, Reddit y LinkedIn. En cualquier otro sitio la extensión no se ejecuta."}}, {"@type": "Question", "name": "¿Cómo detecta qué es política?", "acceptedAnswer": {"@type": "Answer", "text": "Con un clasificador por reglas incluido en la propia extensión, que analiza el texto visible de cada publicación en tu navegador. Es automático y puede equivocarse: puede ocultar algo que no es político o dejar pasar algo que sí lo es."}}, {"@type": "Question", "name": "¿Envía mis datos a algún servidor?", "acceptedAnswer": {"@type": "Answer", "text": "No. Todo ocurre en tu navegador: no hay servidor, ni cuentas, ni analítica, ni conexiones de red propias. Solo guarda tus preferencias y un contador de publicaciones ocultadas."}}, {"@type": "Question", "name": "¿Borra publicaciones o bloquea a alguien?", "acceptedAnswer": {"@type": "Answer", "text": "No. Solo oculta visualmente en tu pantalla. Al desactivar el filtro, todo vuelve a su estado habitual sin recargar la página."}}, {"@type": "Question", "name": "¿Puedo activarlo solo un rato?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. Puedes elegir 30 minutos, 2 horas, 8 horas o sin límite, y al terminar el filtro se desactiva solo. También hay dos niveles: Suave (solo contenido claramente electoral o partidista) y Amplio (incluye política institucional)."}}]}]</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@500&amp;display=swap" rel="stylesheet">
@@ -348,6 +368,18 @@ LinkedIn
 <li style="background: #F2F2F0; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px; font-weight: 800">Nada sale de tu equipo</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A46">El texto no se envía a ningún servidor ni se guarda.</span></li>
 <li style="background: #F2F2F0; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 18px; font-weight: 800">Reversible</strong><span style="font-size: 15px; line-height: 1.5; color: #4A4A46">No se borra nada: siempre puedes mostrar una publicación.</span></li>
 </ul>
+</div>
+</section>
+
+<section id="preguntas" style="max-width: 1120px; margin: 0 auto; padding: 0 24px 96px">
+<h2 style="margin: 0 0 28px; font-size: clamp(32px, 4vw, 48px); line-height: 1; letter-spacing: -0.05em; font-weight: 800">Preguntas frecuentes</h2>
+<div style="background: #E4E4E2; border-radius: 36px; padding: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px">
+<div style="background: #F2F2F0; border-radius: 24px; padding: 22px 26px"><h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em">¿Qué es FeedSinPolítica?</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A46">Una extensión gratuita de Chrome que oculta las publicaciones políticas de tu feed en redes sociales. Las sustituye por una tarjeta compacta con un botón «Mostrar» para que puedas verlas si quieres.</p></div>
+<div style="background: #F2F2F0; border-radius: 24px; padding: 22px 26px"><h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em">¿En qué redes funciona?</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A46">En X (Twitter), YouTube, Bluesky, Menéame, Mastodon, Threads, Reddit y LinkedIn. En cualquier otro sitio la extensión no se ejecuta.</p></div>
+<div style="background: #F2F2F0; border-radius: 24px; padding: 22px 26px"><h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em">¿Cómo detecta qué es política?</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A46">Con un clasificador por reglas incluido en la propia extensión, que analiza el texto visible de cada publicación en tu navegador. Es automático y puede equivocarse: puede ocultar algo que no es político o dejar pasar algo que sí lo es.</p></div>
+<div style="background: #F2F2F0; border-radius: 24px; padding: 22px 26px"><h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em">¿Envía mis datos a algún servidor?</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A46">No. Todo ocurre en tu navegador: no hay servidor, ni cuentas, ni analítica, ni conexiones de red propias. Solo guarda tus preferencias y un contador de publicaciones ocultadas.</p></div>
+<div style="background: #F2F2F0; border-radius: 24px; padding: 22px 26px"><h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em">¿Borra publicaciones o bloquea a alguien?</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A46">No. Solo oculta visualmente en tu pantalla. Al desactivar el filtro, todo vuelve a su estado habitual sin recargar la página.</p></div>
+<div style="background: #F2F2F0; border-radius: 24px; padding: 22px 26px"><h3 style="margin: 0 0 8px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em">¿Puedo activarlo solo un rato?</h3><p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4A46">Sí. Puedes elegir 30 minutos, 2 horas, 8 horas o sin límite, y al terminar el filtro se desactiva solo. También hay dos niveles: Suave (solo contenido claramente electoral o partidista) y Amplio (incluye política institucional).</p></div>
 </div>
 </section>
 
